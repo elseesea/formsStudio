@@ -1,0 +1,47 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script>
+		function setSearchEngine (formElement) {
+			console.log("in setSearchEngine");
+			let actions = {
+				"google": "https://www.google.com/",
+				"duckDuckGo": "	https://duckduckgo.com/",
+				"bing": "https://www.bing.com/search",
+				"ask": "https://www.ask.com/web"
+			};
+			let engineSelected = document.querySelector("input[name=engine]:checked");
+			formElement.setAttribute('action', actions[engineSelected.value]);
+		}
+    	window.addEventListener("load", function(){
+			let formElement = document.querySelector("form");
+        	formElement.addEventListener("submit", function(event) {
+				let textInput = document.querySelector("input[name=q]");
+				let engineSelected = document.getElementsByName("engine");
+				if (textInput.value === "" ||
+					!(engineSelected[0].checked || engineSelected[1].checked || engineSelected[2].checked || engineSelected[3].checked)) {
+					alert("All fields are required.");
+					event.preventDefault();
+				}
+				else
+					setSearchEngine(formElement);
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+	<form id="searchForm">
+		<label><input type="radio" name="engine" value="google"/> Google</label>
+		<label><input type="radio" name="engine" value="duckDuckGo"/> DuckDuckGo</label>
+		<label><input type="radio" name="engine" value="bing"/> Bing</label>
+		<label><input type="radio" name="engine" value="ask"/> Ask</label>
+		<input type="text" name="q" class="formItems"/>
+		<input type="submit" value="Go!" class="formItems"/>
+		<!--button>Go!</button-->
+	</form>
+
+</body>
